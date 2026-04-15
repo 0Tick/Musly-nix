@@ -117,6 +117,27 @@ If you find Musly useful and want to support its development
    flutter run
    ```
 
+## Nix / NixOS
+
+This repository now includes a Nix flake package and overlay using `flutter-nix`.
+
+1. Generate the flutter-nix lock file (required before building):
+   ```bash
+   nix run github:ilkecan/flutter-nix#translator
+   ```
+2. Build the Linux package:
+   ```bash
+   nix build .#musly
+   ```
+3. Run it directly:
+   ```bash
+   nix run .#musly
+   ```
+
+### Using the overlay
+
+Add this repo as a flake input and include `overlays.default`, then install `pkgs.musly`.
+
 ### Connecting to Your Server
 
 1. Launch the app
