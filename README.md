@@ -117,6 +117,43 @@ If you find Musly useful and want to support its development
    flutter run
    ```
 
+## Nix/NixOS Package
+
+This repository includes a Nix package built with `buildFlutterApplication`.
+
+- Build with flakes:
+  ```bash
+  nix build .#musly-player
+  ```
+- Run without installing:
+  ```bash
+  nix run .#musly-player
+  ```
+- Build without flakes:
+  ```bash
+  nix-build
+  ```
+
+For NixOS/Home Manager, use the flake overlay and install `pkgs.muslyPlayer`:
+
+```nix
+{
+  inputs.musly.url = "github:0Tick/Musly-nix";
+
+  outputs = { self, nixpkgs, musly, ... }: {
+    nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ({ pkgs, ... }: {
+          nixpkgs.overlays = [ musly.overlays.default ];
+          environment.systemPackages = [ pkgs.muslyPlayer ];
+        })
+      ];
+    };
+  };
+}
+```
+
 ### Connecting to Your Server
 
 1. Launch the app
